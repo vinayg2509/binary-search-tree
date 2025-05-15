@@ -43,6 +43,24 @@ public class BinarySearchTree<E extends Comparable> {
         inOrder(root.rightNode);
     }
 
+    public boolean search(Node root, E val)
+    {
+        if(root==null)
+        {
+            return false;
+        }
+        if(root.data.compareTo(val)>0)
+        {
+            return search(root.leftNode,val);
+        } else if (root.data.compareTo(val)<0)
+        {
+            return search(root.rightNode,val);
+        }
+        else
+        {
+            return true;
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -65,6 +83,15 @@ public class BinarySearchTree<E extends Comparable> {
         else
         {
             System.out.println("All element are not added");
+        }
+
+        if (binarySearchTree.search(root,70))
+        {
+            System.out.println("Found");
+        }
+        else
+        {
+            System.out.println("Not found");
         }
     }
 }
