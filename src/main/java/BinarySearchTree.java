@@ -21,6 +21,16 @@ public class BinarySearchTree<E extends Comparable> {
         return root;
 
     }
+    
+    public  int size(Node root)
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+
+        return size(root.leftNode)+size(root.rightNode)+1;
+    }
 
     public void  inOrder(Node<E> root)
     {
@@ -38,13 +48,24 @@ public class BinarySearchTree<E extends Comparable> {
     public static void main(String[] args) {
 
         Node root = null;
-        int[] val = {56, 30, 70};
+        int[] val = {56, 30, 70, 22, 40, 60, 95, 11,3,16, 65,63,67};
+
         BinarySearchTree binarySearchTree= new BinarySearchTree();
         for (int i = 0; i < val.length; i++) {
             root = binarySearchTree.insert(root, val[i]);
         }
 
         binarySearchTree.inOrder(root);
+        System.out.println();
+        System.out.println("Size of tree is "+binarySearchTree.size(root));
+        if (val.length==binarySearchTree.size(root))
+        {
+            System.out.println("All element are added successfully......!!!");
+        }
+        else
+        {
+            System.out.println("All element are not added");
+        }
     }
 }
 
