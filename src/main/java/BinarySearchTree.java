@@ -1,103 +1,110 @@
+// Generic class BinarySearchTree where E extends Comparable to allow comparisons
 public class BinarySearchTree<E extends Comparable> {
-    static class Node<E extends Comparable> {
-        E data;
-        Node leftNode, rightNode;
 
+    // Static nested Node class to represent each node in the BST
+    static class Node<E extends Comparable> {
+        E data; // Data stored in the node
+        Node leftNode, rightNode; // References to left and right children
+
+        // Constructor to initialize node with data
         Node(E data) {
             this.data = data;
         }
     }
 
+    // Method to insert a value into the BST
     public Node insert(Node<E> root, E value) {
+        // Base case: if root is null, create a new node with the value
         if (root == null) {
             return new Node(value);
         }
+        // If the value is smaller than root's data, go to left subtree
         if (root.data.compareTo(value) > 0) {
             root.leftNode = insert(root.leftNode, value);
         }
+        // If the value is greater than root's data, go to right subtree
         if (root.data.compareTo(value) < 0) {
             root.rightNode = insert(root.rightNode, value);
         }
+        // Return the (possibly updated) root
         return root;
-
     }
-    
-    public  int size(Node root)
-    {
-        if(root==null)
-        {
+
+    // Method to calculate the size (number of nodes) of the BST
+    public int size(Node root) {
+        // Base case: if node is null, return 0
+        if (root == null) {
             return 0;
         }
-
-        return size(root.leftNode)+size(root.rightNode)+1;
+        // Return size of left + size of right + 1 (for current node)
+        return size(root.leftNode) + size(root.rightNode) + 1;
     }
 
-    public void  inOrder(Node<E> root)
-    {
+    // Method to perform in-order traversal (Left -> Root -> Right)
+    public void inOrder(Node<E> root) {
         if (root == null) {
-            return ;
+            return; // Base case: do nothing if node is null
         }
 
-        inOrder(root.leftNode);
-        System.out.print(root.data+" ");
-        inOrder(root.rightNode);
+        inOrder(root.leftNode); // Traverse left subtree
+        System.out.print(root.data + " "); // Visit current node
+        inOrder(root.rightNode); // Traverse right subtree
     }
 
-    public boolean search(Node root, E val)
-    {
-        if(root==null)
-        {
+    // Method to search for a value in the BST
+    public boolean search(Node root, E val) {
+        // Base case: not found
+        if (root == null) {
             return false;
         }
-        if(root.data.compareTo(val)>0)
-        {
-            return search(root.leftNode,val);
-        } else if (root.data.compareTo(val)<0)
-        {
-            return search(root.rightNode,val);
+        // If value is less, search in left subtree
+        if (root.data.compareTo(val) > 0) {
+            return search(root.leftNode, val);
         }
-        else
-        {
-            return true;
+        // If value is greater, search in right subtree
+        else if (root.data.compareTo(val) < 0) {
+            return search(root.rightNode, val);
+        }
+        else {
+            return true; // Found the value
         }
     }
 
-
+    // Main method to run and test BST functionality
     public static void main(String[] args) {
 
-        Node root = null;
-        int[] val = {56, 30, 70, 22, 40, 60, 95, 11,3,16, 65,63,67};
+        Node root = null; // Initialize root of BST
 
-        BinarySearchTree binarySearchTree= new BinarySearchTree();
+        // Array of values to insert into the BST
+        int[] val = {56, 30, 70, 22, 40, 60, 95, 11, 3, 16, 65, 63, 67};
+
+        // Create an instance of BinarySearchTree
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+
+        // Insert all values into the BST
         for (int i = 0; i < val.length; i++) {
             root = binarySearchTree.insert(root, val[i]);
         }
 
+        // Display in-order traversal (should be sorted)
         binarySearchTree.inOrder(root);
-        System.out.println();
-        System.out.println("Size of tree is "+binarySearchTree.size(root));
-        if (val.length==binarySearchTree.size(root))
-        {
-            System.out.println("All element are added successfully......!!!");
-        }
-        else
-        {
-            System.out.println("All element are not added");
+        System.out.println(); // New line
+
+        // Print the size of the BST
+        System.out.println("Size of tree is " + binarySearchTree.size(root));
+
+        // Check if all elements were added successfully
+        if (val.length == binarySearchTree.size(root)) {
+            System.out.println("All elements are added successfully......!!!");
+        } else {
+            System.out.println("All elements are not added");
         }
 
-        if (binarySearchTree.search(root,70))
-        {
+        // Search for value 63 in the BST
+        if (binarySearchTree.search(root, 63)) {
             System.out.println("Found");
-        }
-        else
-        {
+        } else {
             System.out.println("Not found");
         }
     }
 }
-
-
-
-
-
-
